@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
 
+import Form from "react-jsonschema-form";
+
+const schema = {
+    title: "Todo",
+    type: "object",
+    required: ["title"],
+    properties: {
+        title: {type: "string", title: "Title", default: "A new task"},
+        done: {type: "boolean", title: "Done?", default: false}
+    }
+};
+
+const log = (type) => console.log.bind(console, type);
+
+
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div>
+        <Form schema={schema}
+              onChange={log("changed")}
+              onSubmit={log("submitted")}
+              onError={log("errors")} />
+      </div>
     </div>
   );
 }
